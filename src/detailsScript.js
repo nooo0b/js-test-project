@@ -14,7 +14,21 @@ const getCountery = async () => {
     let countryName = country.name.toLowerCase();
     return countryName === selectedCountry;
   });
-  console.log(myCountry);
+  document.getElementById("country").innerText = selectedCountry.toUpperCase();
+  document.getElementById("case").innerText =
+    "TotalConfirmed : " + TotalConfirmed;
+  document.getElementById("death").innerText = "TotalDeaths : " + TotalDeaths;
+  document.getElementById("recover").innerText =
+    "TotalRecovered : " + TotalRecovered;
+  document.getElementById("popu").innerText =
+    "Population : " + myCountry.population;
+  document.getElementById("cap").innerText = "Capital : " + myCountry.capital;
+  document.getElementById("reg").innerText = "Region : " + myCountry.region;
+  document.getElementById("lang").innerText =
+    "Language : " + myCountry.languages[0].name;
+  document.getElementById("time").innerText =
+    "Timezone : " + myCountry.timezones[0];
+  document.getElementById("flag").src = myCountry.flags.png;
 };
 
 getCountery();
