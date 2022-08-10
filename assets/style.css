@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
 
 * {
   padding: 0;
@@ -15,7 +15,7 @@ body {
   width: 95%;
   max-width: 960px;
   margin: auto;
-  position:absolute;
+  position: absolute;
   left: 0;
   top: 25%;
   right: 0;
@@ -78,25 +78,25 @@ body {
   display: none;
 }
 
-img{
+img {
   width: 100%;
   display: block;
 }
-.img-display{
+.img-display {
   overflow: hidden;
 }
-.img-showcase{
+.img-showcase {
   display: flex;
   width: 100%;
   transition: all 0.5s ease;
 }
-.img-showcase img{
+.img-showcase img {
   min-width: 100%;
 }
-.country-details{
+.country-details {
   padding: 2rem 1rem;
 }
-.country-title{
+.country-title {
   font-size: 3rem;
   text-transform: capitalize;
   font-weight: 700;
@@ -105,32 +105,32 @@ img{
   margin: 1rem 0;
 }
 
-.covid-details{
+.covid-details {
   margin: 1rem 0;
   font-size: 1rem;
   font-weight: 700;
 }
-.covid-details span{
+.covid-details span {
   font-weight: 400;
 }
-.covid-data span{
+.covid-data span {
   color: #256eff;
 }
-.country-info h2{
+.country-info h2 {
   text-transform: capitalize;
   color: #12263a;
   padding-bottom: 0.6rem;
 }
-.country-info p{
+.country-info p {
   font-size: 0.9rem;
   padding: 0.3rem;
   opacity: 0.8;
 }
-.country-info ul{
+.country-info ul {
   margin: 1rem 0;
   font-size: 0.9rem;
 }
-.country-info ul li{
+.country-info ul li {
   margin: 0;
   list-style: none;
   background-size: 18px;
@@ -139,28 +139,31 @@ img{
   font-weight: 600;
   opacity: 0.9;
 }
-.country-info ul li span{
+.country-info ul li span {
   font-weight: 400;
 }
 
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
 
 @media screen and (max-width: 720px) {
-  .card{
+  .card {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1.5rem;
-}
+  }
   #country {
     grid-template-columns: auto auto;
     grid-column-gap: 1em;
   }
-  .country-flags{
+  .country-flags {
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-.country-details{
+  }
+  .country-details {
     padding-top: 0;
+  }
 }
-}
-

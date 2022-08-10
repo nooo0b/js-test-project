@@ -1,54 +1,26 @@
-let country = {
-  data: [
-    {
-      countryName: "Australia",
-      cases: "9,684,642",
-      deaths: "12,439",
-    },
-    {
-      countryName: "Austria",
-      cases: "4,796,689",
-      deaths: "19,215",
-    },
-    {
-      countryName: "Bangladesh",
-      cases: "2,007,870",
-      deaths: "29,308",
-    },
-    {
-      countryName: "Brazil",
-      cases: "34,035,780",
-      deaths: "680,239",
-      image: "Brazil.jpg",
-    },
-    {
-      countryName: "Chile",
-      cases: "4,320,173",
-      deaths: "59,840",
-    },
-    {
-      countryName: "Denmark",
-      cases: "3,072,250",
-      deaths: "6,758",
-    },
-    {
-      countryName: "Finland",
-      cases: "1,218,216",
-      deaths: "5,251",
-    },
-    {
-      countryName: "Ghana",
-      cases: "168,350",
-      deaths: "1,458",
-    },
-  ],
+let countryData = [];
+let covidData = [];
+
+const getCountery = async () => {
+  const resp = await fetch("https://restcountries.com/v2/all");
+  const data = await resp.json();
+  countryData = data;
 };
 
-for (let i of country.data) {
+const getCovidData = async () => {
+  const resp = await fetch("https://api.covid19api.com/summary");
+  const data = await resp.json();
+  covidData = data.Countries;
+};
+
+const createCard = (i) => {
   //Create Card
+  let linkCrad = document.createElement("a");
+  linkCrad.href = "/details.html";
+
   let card = document.createElement("div");
   //Card should stay hidden initially
-  card.classList.add("card", "hide");
+  card.classList.add("card");
 
   //container
   let container = document.createElement("div");
@@ -56,66 +28,61 @@ for (let i of country.data) {
   //country name
   let name = document.createElement("h4");
   name.classList.add("country-name");
-  name.innerText = i.countryName.toUpperCase();
+  name.innerText = i.Country.toUpperCase();
   container.appendChild(name);
   //cases
   let cases = document.createElement("h6");
-  cases.innerText = "Cases: " + i.cases;
+  cases.innerText = "Cases: " + i.TotalConfirmed;
   container.appendChild(cases);
   //deaths
   let deaths = document.createElement("h6");
-  deaths.innerText = "Deaths: " + i.deaths;
-  container.appendChild(deaths);  
+  deaths.innerText = "Deaths: " + i.TotalDeaths;
+  container.appendChild(deaths);
 
   //more details
   let details = document.createElement("h6");
   details.innerText = "More Details";
-  container.appendChild(details);  
+  container.appendChild(details);
 
   card.appendChild(container);
-  document.getElementById("country").appendChild(card);
-}
+  linkCrad.appendChild(card);
+  document.getElementById("country").appendChild(linkCrad);
+};
 
-//parameter passed from button
-function filterCountry(value) {
-  //Button class code
-  let buttons = document.querySelectorAll(".button-value");
-  //select all cards
-  let elements = document.querySelectorAll(".card");
-  //loop through all cards
-  elements.forEach((element) => {
-    //display all cards on 'all' button click
-    if (value == "all") {
-      element.classList.remove("hide");
-    } else {
-        //hide other elements
-        element.classList.add("hide");
+const removeCrad = () => {
+  let card = document.getElementById("country");
+  while (card.firstChild) {
+    card.removeChild(card.firstChild);
+  }
+};
+
+getCovidData();
+getCountery();
+
+let filteredCovidData = [];
+let selectedCountry = "bangladesh";
+
+const searchInput = document.getElementById("search-input");
+searchInput.addEventListener("input", (event) => {
+  const str = searchInput.value;
+  const lowerStr = str.toLowerCase();
+  if (lowerStr.length > 1) {
+    filteredCovidData = [];
+    removeCrad();
+    covidData.forEach((data) => {
+      const name = data.Country;
+      const lowerName = name.toLowerCase();
+      if (lowerName.indexOf(lowerStr) > -1) {
+        filteredCovidData.push(data);
       }
-    
-  });
-}
-
-//Search button click
-document.getElementById("search").addEventListener("click", () => {
-  //initializations
-  let searchInput = document.getElementById("search-input").value;
-  let elements = document.querySelectorAll(".country-name");
-  let cards = document.querySelectorAll(".card");
-
-  //loop through all elements
-  elements.forEach((element, index) => {
-    //check if text includes the search value
-    if (element.innerText.includes(searchInput.toUpperCase())) {
-      //display matching card
-      cards[index].classList.remove("hide");
-    } else {
-      //hide others
-      cards[index].classList.add("hide");
-    }
-  });
+    });
+    filteredCovidData.forEach((data) => createCard(data));
+  } else {
+    filteredCovidData = [];
+    removeCrad();
+  }
 });
 
-//Initially display all country
-window.onload = () => {
-  filterCountry("all");
+window.onload = function () {
+  searchInput.value = "";
 };
