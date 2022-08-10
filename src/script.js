@@ -1,11 +1,4 @@
-let countryData = [];
 let covidData = [];
-
-const getCountery = async () => {
-  const resp = await fetch("https://restcountries.com/v2/all");
-  const data = await resp.json();
-  countryData = data;
-};
 
 const getCovidData = async () => {
   const resp = await fetch("https://api.covid19api.com/summary");
@@ -16,7 +9,7 @@ const getCovidData = async () => {
 const createCard = (i) => {
   //Create Card
   let linkCrad = document.createElement("a");
-  linkCrad.href = "/details.html";
+  linkCrad.href = `/details.html`;
 
   let card = document.createElement("div");
   //Card should stay hidden initially
@@ -57,10 +50,9 @@ const removeCrad = () => {
 };
 
 getCovidData();
-getCountery();
 
 let filteredCovidData = [];
-let selectedCountry = "bangladesh";
+selectedCountry = "bangladesh";
 
 const searchInput = document.getElementById("search-input");
 searchInput.addEventListener("input", (event) => {
@@ -81,6 +73,24 @@ searchInput.addEventListener("input", (event) => {
     filteredCovidData = [];
     removeCrad();
   }
+});
+
+const countryElement = document.getElementById("country");
+countryElement.addEventListener("click", (event) => {
+  let el = event.target;
+  const tagName = el.tagName;
+  if (tagName !== "div") {
+    el = el.parentNode;
+  }
+  const realElement = el.querySelector(".country-name");
+  selectedCountry = realElement.innerText;
+  const selectedCovidData = covidData.find((data) => {
+    return data.Country.toLowerCase() === selectedCountry.toLowerCase();
+  });
+  sessionStorage.setItem("selectedCountry", selectedCountry);
+  sessionStorage.setItem("TotalConfirmed", selectedCovidData.TotalConfirmed);
+  sessionStorage.setItem("TotalDeaths", selectedCovidData.TotalDeaths);
+  sessionStorage.setItem("TotalRecovered", selectedCovidData.TotalRecovered);
 });
 
 window.onload = function () {
