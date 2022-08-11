@@ -1,6 +1,9 @@
 let countryData = [];
 
 let selectedCountry = sessionStorage.getItem("selectedCountry").toLowerCase();
+if(selectedCountry === "UNITED KINGDOM"){
+  selectedCountry = "United Kingdom of Great Britain and Northern Ireland".toLowerCase();
+}
 let TotalConfirmed = sessionStorage.getItem("TotalConfirmed");
 let TotalDeaths = sessionStorage.getItem("TotalDeaths");
 let TotalRecovered = sessionStorage.getItem("TotalRecovered");
